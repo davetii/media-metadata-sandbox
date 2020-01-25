@@ -1,1 +1,1 @@
-"# media-metadata-sandbox" 
+# media-metadata-sandbox
