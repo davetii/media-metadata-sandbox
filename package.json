@@ -1,0 +1,23 @@
+{
+  "name": "media-metadata-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "electron": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davetii/media-metadata-sandbox.git"
+  },
+  "author": "Dave Turner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davetii/media-metadata-sandbox/issues"
+  },
+  "homepage": "https://github.com/davetii/media-metadata-sandbox#readme",
+  "devDependencies": {
+    "electron": "^7.1.10",
+    "music-metadata": "^6.3.1"
+  }
+}
