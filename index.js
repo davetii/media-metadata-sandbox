@@ -1,47 +1,18 @@
 electron  = require('electron');
-const {app, BrowserWindow, Menu} = electron;
+const {app, Menu, dialog, ipcMain, ipcRenderer  } = electron;
+const events = require('events');
+const MainWindow = require('./app/MainWindow');
+const MenuTemplate = require('./app/MenuTemplate');
 let mainWindow;
+let menuTemplate;
+const eventEmitter = new events.EventEmitter();
 
 app.on('ready', () => {
-    mainWindow = new BrowserWindow({
-        webPreferences: {
-            nodeIntegration: true
-        }});
-    mainWindow.loadURL(`file://${__dirname}/app/main.html`);
-    mainWindow.on('closed', () => app.quit());
-
-    const mainMenu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(mainMenu);
+    mainWindow =  new MainWindow();
+    menuTemplate = new MenuTemplate(mainWindow, eventEmitter);
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate.content));
 });
 
-const menuTemplate = [
-    {
-        label: 'File',
-        submenu: [
-            {
-                label: 'Open',
-                click() {
-                    console.log('open');
-                }
-            },
-            {
-                label: 'Quit',
-                accelerator : process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-                click() {
-                    app.quit();
-                }
-            },
-        ]
-    },
-    {
-        label: 'View',
-        submenu: [
-            { role: 'reload'},
-            {
-                label: 'Developer Tools',
-                accelerator : process.platform === 'darwin' ? 'Command+Alt+I' : 'Ctrl+Shift+I',
-                click(item,focusedWindow) { focusedWindow.toggleDevTools(); }
-            }
-        ]
-    }
-];
+eventEmitter.on('load-file', (files) => {
+    mainWindow.loadFile(files);
+});
