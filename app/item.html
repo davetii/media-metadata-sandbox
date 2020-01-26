@@ -24,9 +24,9 @@
                     </div>
                 </div>
                 <div class="form_group row">
-                    <label for="song" class="col-2">Song</label>
+                    <label for="title" class="col-2">Title</label>
                     <div class="input">
-                        <input type="text" id="song">
+                        <input type="text" id="title">
                     </div>
                 </div>
                 <div class="form_group row">
@@ -46,6 +46,17 @@
         </main>
     </div>
 
+<script>
+    const electron = require('electron');
+    const {ipcRenderer } = electron;
 
+    ipcRenderer.on('populate-form', (event, data) => {
+        document.getElementById('artist').value = data.artist;
+        document.getElementById('collection').value = data.album;
+        document.getElementById('title').value = data.title;
+        document.getElementById('year').value = data.year;
+        document.getElementById('track').value = data.track.no;
+    });
+</script>
 </body>
 </html>

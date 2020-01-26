@@ -1,17 +1,26 @@
-electron  = require('electron');
-const {app, Menu, dialog, ipcMain, ipcRenderer  } = electron;
+const electron  = require('electron');
+const {app } = electron;
 const events = require('events');
+const mm = require('music-metadata');
+const util = require('util');
 const MainWindow = require('./app/MainWindow');
-const MenuContent = require('./app/MenuContent');
 
 let mainWindow;
 const eventEmitter = new events.EventEmitter();
 
 app.on('ready', () => {
-    mainWindow =  new MainWindow();
-    Menu.setApplicationMenu(Menu.buildFromTemplate(new MenuContent(mainWindow, eventEmitter).content));
+    mainWindow =  new MainWindow(eventEmitter);
 });
 
 eventEmitter.on('load-file', (files) => {
-    mainWindow.loadFile(files);
+    console.log('load-file');
+    console.log(files);
+    mm.parseFile(files[0])
+        .then( metadata => {
+            console.log(util.inspect(metadata.common));
+            mainWindow.webContents.send('populate-form' , metadata.common);
+        })
+        .catch( err => {
+            console.error(err.message);
+        });
 });
