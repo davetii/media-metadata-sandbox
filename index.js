@@ -2,15 +2,14 @@ electron  = require('electron');
 const {app, Menu, dialog, ipcMain, ipcRenderer  } = electron;
 const events = require('events');
 const MainWindow = require('./app/MainWindow');
-const MenuTemplate = require('./app/MenuTemplate');
+const MenuContent = require('./app/MenuContent');
+
 let mainWindow;
-let menuTemplate;
 const eventEmitter = new events.EventEmitter();
 
 app.on('ready', () => {
     mainWindow =  new MainWindow();
-    menuTemplate = new MenuTemplate(mainWindow, eventEmitter);
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate.content));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(new MenuContent(mainWindow, eventEmitter).content));
 });
 
 eventEmitter.on('load-file', (files) => {

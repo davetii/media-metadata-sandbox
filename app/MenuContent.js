@@ -1,6 +1,6 @@
 const {app, dialog} = electron;
 
-class MenuTemplate {
+class MenuContent {
     constructor(mainWindow, eventEmitter) {
         this.content =
             [
@@ -54,4 +54,4 @@ class MenuTemplate {
 
 }
 
-module.exports = MenuTemplate;
+module.exports = MenuContent;
