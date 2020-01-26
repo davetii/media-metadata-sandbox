@@ -18,6 +18,7 @@ eventEmitter.on('load-file', (files) => {
     mm.parseFile(files[0])
         .then( metadata => {
             console.log(util.inspect(metadata.common));
+            metadata.common.fileName = files[0];
             mainWindow.webContents.send('populate-form' , metadata.common);
         })
         .catch( err => {

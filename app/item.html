@@ -5,52 +5,71 @@
     <meta charset="UTF-8">
     <title>Form</title>
     <link rel="stylesheet" href="./kickstart.min.css" />
+
 </head>
 <body>
-    <div class="wrapper">
-        <main class="content">
-            <h2>FileName</h2>
-            <form class="form form-left">
-                <div class="form-group row">
-                    <label for="artist" class="col-2">Artist</label>
-                    <div class="input">
-                        <input type="text" id="artist">
+        <div class="wrapper">
+        <h2 id="fileName">FileName</h2>
+        <main class="container">
+            <div class="row">
+                <div id="frm" class="col-twothirds">
+                    <div class="form_group row">
+                        <label for="isEditable" >IsEditable</label>
+                        <div class="input">
+                            <input type="checkbox" id="isEditable">
+                        </div>
                     </div>
+                    <form class="form form-left">
+
+                        <div class="form-group row">
+                            <label for="artist" class="col-3">Artist</label>
+                            <div class="input">
+                                <input type="text" id="artist" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="collection" class="col-3">Collection</label>
+                            <div class="input">
+                                <input type="text" id="collection" readonly>
+                            </div>
+                        </div>
+                        <div class="form_group row">
+                            <label for="title" class="col-3">Title</label>
+                            <div class="input">
+                                <input type="text" id="title" readonly>
+                            </div>
+                        </div>
+                        <div class="form_group row">
+                            <label for="year" class="col-3">Year</label>
+                            <div class="input">
+                                <input type="text" id="year" readonly>
+                            </div>
+                        </div>
+                        <div class="form_group row">
+                            <label for="track" class="col-3">Track Number</label>
+                            <div class="input">
+                                <input type="text" id="track" readonly>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-                <div class="form-group row">
-                    <label for="collection" class="col-2">Collection</label>
-                    <div class="input">
-                        <input type="text" id="collection">
-                    </div>
-                </div>
-                <div class="form_group row">
-                    <label for="title" class="col-2">Title</label>
-                    <div class="input">
-                        <input type="text" id="title">
-                    </div>
-                </div>
-                <div class="form_group row">
-                    <label for="year" class="col-2">Year</label>
-                    <div class="input">
-                        <input type="text" id="year">
-                    </div>
-                </div>
-                <div class="form_group row">
-                    <label for="track" class="col-2">Track Number</label>
-                    <div class="input">
-                        <input type="text" id="track">
-                    </div>
+                <div id="imageSection" class="col-third"  style="border: 1px solid #b32f15">
+                    <img id="image" />
                 </div>
 
-            </form>
+            </div>
+
         </main>
-    </div>
+        </div>
+
 
 <script>
     const electron = require('electron');
     const {ipcRenderer } = electron;
 
     ipcRenderer.on('populate-form', (event, data) => {
+        document.getElementById('fileName').innerText = data.fileName;
         document.getElementById('artist').value = data.artist;
         document.getElementById('collection').value = data.album;
         document.getElementById('title').value = data.title;
