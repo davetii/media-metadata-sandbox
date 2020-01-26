@@ -69,12 +69,22 @@
     const {ipcRenderer } = electron;
 
     ipcRenderer.on('populate-form', (event, data) => {
+        if (!data) { return; }
+
         document.getElementById('fileName').innerText = data.fileName;
         document.getElementById('artist').value = data.artist;
         document.getElementById('collection').value = data.album;
         document.getElementById('title').value = data.title;
         document.getElementById('year').value = data.year;
         document.getElementById('track').value = data.track.no;
+
+        if(data.imageContent) {
+            document.getElementById('image').style.visibility = 'visible';
+            document.getElementById('image').src = data.imageContent;
+        } else {
+            document.getElementById('image').style.visibility = 'hidden';
+            document.getElementById('image').src = '#';
+        }
     });
 </script>
 </body>
