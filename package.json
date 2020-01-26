@@ -18,6 +18,7 @@
   "homepage": "https://github.com/davetii/media-metadata-sandbox#readme",
   "devDependencies": {
     "electron": "^7.1.10",
+    "kickstart-node": "^3.0.75",
     "music-metadata": "^6.3.1"
   }
 }
