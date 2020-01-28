@@ -2,7 +2,6 @@ const electron  = require('electron');
 const {app } = electron;
 const events = require('events');
 const mm = require('music-metadata');
-const util = require('util');
 const MainWindow = require('./app/MainWindow');
 
 let mainWindow;
@@ -17,8 +16,7 @@ eventEmitter.on('load-file', (files) => {
         .then( metadata => {
             metadata.common.fileName = files[0];
             if (metadata.common.picture) {
-                const base64data =metadata.common.picture[0].data.toString('base64');
-                metadata.common.imageContent = 'data:image/png;base64, ' +  base64data;
+                metadata.common.imageData = metadata.common.picture[0].data;
             }
             mainWindow.webContents.send('populate-form' , metadata.common);
         })

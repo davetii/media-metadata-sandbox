@@ -67,6 +67,10 @@
 <script>
     const electron = require('electron');
     const {ipcRenderer } = electron;
+    const sizeOf = require('image-size');
+
+    const MAX_IMAGE_WIDTH = 300;
+    const MAX_IMAGE_HEIGHT = 300;
 
     ipcRenderer.on('populate-form', (event, data) => {
         if (!data) { return; }
@@ -78,14 +82,20 @@
         document.getElementById('year').value = data.year;
         document.getElementById('track').value = data.track.no;
 
-        if(data.imageContent) {
+        if(data.imageData) {
+            const {height, width}  = sizeOf(data.imageData);
+            const ratio = Math.min(MAX_IMAGE_WIDTH / width, MAX_IMAGE_HEIGHT / height);
+            document.getElementById('image').width =width*ratio;
+            document.getElementById('image').height =height*ratio;
+            const base64data =data.imageData.toString('base64');
+            document.getElementById('image').src = 'data:image/png;base64, ' +  base64data;
             document.getElementById('image').style.visibility = 'visible';
-            document.getElementById('image').src = data.imageContent;
         } else {
             document.getElementById('image').style.visibility = 'hidden';
             document.getElementById('image').src = '#';
         }
     });
+
 </script>
 </body>
 </html>
